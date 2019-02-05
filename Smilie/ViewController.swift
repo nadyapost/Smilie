@@ -65,24 +65,30 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // 2 blendShapes is a dictionary that stores coefficients corresponding to various facial features
         let leftSmileValue = faceAnchor.blendShapes[.mouthSmileLeft] as! CGFloat
         let rightSmileValue = faceAnchor.blendShapes[.mouthSmileRight] as! CGFloat
+        let tongueOutValue = faceAnchor.blendShapes[.tongueOut] as! CGFloat
         
         
         // 3
         //print(leftSmileValue, rightSmileValue)
         
         DispatchQueue.main.async {
-            self.handleSmile(leftValue: leftSmileValue, rightValue: rightSmileValue)
+            self.handleSmile(leftValue: leftSmileValue, rightValue: rightSmileValue, tongueValue: tongueOutValue)
         }
     }
     
     // change the emoji in our smileLabel depending on how much the user is smiling into the camera
-    func handleSmile(leftValue: CGFloat, rightValue: CGFloat) {
+    func handleSmile(leftValue: CGFloat, rightValue: CGFloat, tongueValue: CGFloat) {
         let smileValue = (leftValue + rightValue)/2.0
+        
         switch smileValue {
         case _ where smileValue > 0.5:
             smileLabel.text = "😁"
         case _ where smileValue > 0.2:
             smileLabel.text = "🙂"
+        case _ where tongueValue > 0.2:
+            smileLabel.text = "😋"
+        case _ where tongueValue > 0.5:
+            smileLabel.text = "😝"
         default:
             smileLabel.text = "😐"
         }
