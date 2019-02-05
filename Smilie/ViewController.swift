@@ -61,7 +61,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         print(leftSmileValue, rightSmileValue)
     }
     
-    
+    func handleSmile(leftValue: CGFloat, rightValue: CGFloat) {
+        let smileValue = (leftValue + rightValue)/2.0
+        switch smileValue {
+        case _ where smileValue > 0.5:
+            smileLabel.text = "😁"
+        case _ where smileValue > 0.2:
+            smileLabel.text = "🙂"
+        default:
+            smileLabel.text = "😐"
+        }
+    }
     
     
 }
